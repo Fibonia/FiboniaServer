@@ -48,7 +48,8 @@ def create_payment():
     # Create a PaymentIntent with the order amount and currency
     intent = stripe.PaymentIntent.create(
         amount=data["amount"],
-        currency='usd'
+        currency='usd',
+        customer=data['customer']
     )
 
     try:
