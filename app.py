@@ -22,11 +22,9 @@ def calculate_order_amount(items):
 def intro():
     return "Hello there"
 
-@app.route('/create_customer', methods=['POST'])
+    @app.route('/create_customer', methods=['GET'])
 def creatCustomer():
-    cust = stripe.Customer.create(description="created for user")
-    custID = cust['id']
-    return custID
+    return stripe.Customer.create(description="created for user")
 
 
 @app.route('/ephemeral_keys', methods=['POST'])
