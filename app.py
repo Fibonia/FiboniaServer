@@ -24,7 +24,8 @@ def intro():
 
 @app.route('/create_customer', methods=['GET'])
 def createCustomer():
-    return stripe.Customer.create(description="created for user")
+    cust = stripe.Customer.create(description="created for user")
+    return cust["id"]
 
 
 @app.route('/ephemeral_keys', methods=['POST'])
