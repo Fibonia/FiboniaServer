@@ -11,13 +11,6 @@ from flask import Flask, render_template, jsonify, request
 app = Flask(__name__, static_folder=".",
             static_url_path="", template_folder=".")
 
-
-def calculate_order_amount(items):
-    # Replace this constant with a calculation of the order's amount
-    # Calculate the order total on the server to prevent
-    # people from directly manipulating the amount on the client
-    return 1400
-
 @app.route('/')
 def intro():
     return "Hello there"
@@ -56,6 +49,70 @@ def create_payment():
         return jsonify({'publishableKey': os.getenv('STRIPE_PUBLISHABLE_KEY'), 'clientSecret': intent.client_secret})
     except Exception as e:
         return jsonify(error=str(e)), 403
+
+##Methods added for Stripe Connect
+
+
+@app.route("/connect/oauth", methods=["GET"])
+def handle_oauth_redirect():
+    # Assert the state matches the state you provided in the OAuth link (optional).
+    state = request.args.get("state")
+
+    if not state_matches(state):
+        return json.dumps({"error": "Incorrect state parameter: " + state}), 403
+
+  # Send the authorization code to Stripe's API.
+    code = request.args.get("code")
+    try:
+        response = stripe.OAuth.token(grant_type="authorization_code", code=code,)
+    except stripe.oauth_error.OAuthError as e:
+        return json.dumps({"error": "Invalid authorization code: " + code}), 400
+    except Exception as e:
+        return json.dumps({"error": "An unknown error occurred."}), 500
+
+    connected_account_id = response["stripe_user_id"]
+    save_account_id(connected_account_id)
+    print("account ID", connected_account_id)
+
+  # Render some HTML or redirect to a different page.
+    return json.dumps({"success": True}), 200
+
+def state_matches(state_parameter):
+  # Load the same state value that you randomly generated for your OAuth link.
+    saved_state = "{{ STATE }}"
+
+    return saved_state == state_parameter
+
+def save_account_id(id):
+  # Save the connected account ID from the response to your database.
+    print("Connected account ID: ", id)
+
+@app.route("/webhook", methods=["POST"])
+def webhook_received():
+    request_data = json.loads(request.data)
+    signature = request.headers.get("stripe-signature")
+
+# Verify webhook signature and extract the event.
+# See https://stripe.com/docs/webhooks/signatures for more information.
+    try:
+        event = stripe.Webhook.construct_event(
+            payload=request.data, sig_header=signature, secret=webhook_secret
+        )
+    except ValueError as e:
+        # Invalid payload.
+        return Response(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid Signature.
+        return Response(status=400)
+    if event["type"] == "payment_intent.succeeded":
+        payment_intent = event["data"]["object"]
+        handle_successful_payment_intent(payment_intent)
+
+    return json.dumps({"success": True}), 200
+
+def handle_successful_payment_intent(payment_intent):
+    print(str( payment_intent))
+    ##MARK: Fill this space
 
 if __name__ == '__main__':
     app.run()
