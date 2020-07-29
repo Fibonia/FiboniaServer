@@ -61,11 +61,11 @@ def create_payment():
 @app.route("/connect/oauth", methods=["GET"])
 def handle_oauth_redirect():
     # Assert the state matches the state you provided in the OAuth link (optional).
-    state = request.args.get("state")
+    #state = request.args.get("state")
 
-    if not state_matches(state):
-        send_email("bad state")
-        return json.dumps({"error": "Incorrect state parameter: " + state}), 403
+    #if not state_matches(state):
+     #   send_email("bad state")
+      #  return json.dumps({"error": "Incorrect state parameter: " + state}), 403
 
     # Send the authorization code to Stripe's API.
     code = request.args.get("code")
