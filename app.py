@@ -5,11 +5,18 @@ import gunicorn
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import webbrowser
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 # This is your real test secret API key.
 
 stripe.api_key = "sk_test_DMiK1oNbmgPE0SxC69vLO489007v8m0JWJ"
+
+cred = credentials.Certificate('fibonia-83e34-83001bbabd20.json')
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
 
 from flask import Flask, render_template, jsonify, request
 
@@ -58,8 +65,8 @@ def create_payment():
 ##Methods added for Stripe Connect
 
 
-@app.route("/connect/oauth", methods=["GET"])
-def handle_oauth_redirect():
+@app.route("/connect/oauth/<tutorEmail>", methods=["GET"])
+def handle_oauth_redirect(tutorEmail):
     # Assert the state matches the state you provided in the OAuth link (optional).
     state = request.args.get("state")
 
@@ -79,14 +86,15 @@ def handle_oauth_redirect():
         return json.dumps({"error": "An unknown error occurred."}), 500
 
     connected_account_id = response["stripe_user_id"]
+    doc_ref = db.collection(u'tutors').document(u'{}'.format(tutorEmail))
+    doc_ref.update({u'stripe_id': connected_account_id})
+
     send_email(connected_account_id)
-    save_account_id(connected_account_id)
     print("account ID", connected_account_id)
 
-    # Render some HTML or redirect to a different page.
-    webbrowser.open("https://www.fibonia.com/")
-    print("opened browser")
-    return #json.dumps({"success": True}), 200
+    # Render some HTML or redirect to a different page.clear
+
+    return json.dumps({"success": True}), 200
 
 def state_matches(state_parameter):
   # Load the same state value that you randomly generated for your OAuth link.
@@ -94,9 +102,6 @@ def state_matches(state_parameter):
 
     return saved_state == state_parameter
 
-def save_account_id(id):
-  # Save the connected account ID from the response to your database.
-    print("Connected account ID: ", id)
 
 
 def send_email(content):

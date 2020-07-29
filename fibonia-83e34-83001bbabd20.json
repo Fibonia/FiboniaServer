@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fibonia-83e34",
+  "private_key_id": "83001bbabd207a396a8b28944c91af11f2ec92d2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDwugu2Jrwy2Lrv\ny5s3NTkurSc9sZNCE5cAt5XdVmxtd+C+9OMITqvWux4GKigOe4vOqw/oAYR80XZ9\nfeYuSzLo6wt5krDOJxnMXe4lcveb+zQOV5EU34XPgT/HMIhENUWcSE5przFD9CAA\n9uZqC1zX3HYk8RaLExXK0jQPG7MLJ5JNyGmQi8uyUhPrXkwqAJ0dWrKjV6335ruY\n1X+QA2nWUY2QWxqWgTacwpqRw8kd+sJBOP19LAfbwiiIDUi8ejIFmmp3sptHlxhK\nRVzD2AmDVD4ow1FYlNN9RRqHRO6dS6S8vxkzclJpVjfPe9pE12gucYPZg/4eZ7Vi\n9Sd/XWPPAgMBAAECggEAAkqVGTt2DJ8guvGXbaxP9ImXkHmuw2zoheC8Mpi+MAV+\n4OYuFa4YJmD9XeUaEGDi18+WAPtxhi7h18kDZ276EBPtLcImTq5VaAqFcHv8JtMF\nZv8pqIOQ6+FKflq7rDVBxcrFuDcVYzK7A64k7sPPxjCxrervK858Ks8OuUlpCiE1\nQB6BvclIPCRCmIY+eDH8O32UDpXK88kDVZMeOP/vi/0UfJNdYoT00fEtzg9tyYpF\n3N86H4gzXGcGXcmICbubLWnn1W+8/ndOMsUZF/gbstKdseA4tmfppVgkrUVHvzNd\nal5WBZ9m6XH59cmvpTcYrgp62sBOqXXJu8N/eGVkmQKBgQD8lHbDElW6HwZfsn/8\nkd6ecaDi2M6etJKQI0an1iogaOJykz1llStYrot+sR2FOi9wY/QHuDCmKJ1JOqhR\nzo/I0Gwwv3fq/RyEyw8CuelAiVOktZ2ARzaX/S62o6v/sYvTIftXcnewTOwZUtAo\no8qtPS5V0gkaY9d+t2szHZbaWwKBgQDz/H6Gzug8WhWWwRo866xCA5Tn4l1CjPVo\n444+qoefmpklFYDKk3UZm86yOUrLh5CBMx2tx97Exgd41hOCiMadEtuVrfZEKbwh\nbp1Bqu3q1LY65Ro5ZZAe4utBphM6kNEbigPIO2wLzs+PycRUxBls4OUj78/y1XAN\n8CTIRSGOnQKBgQCh203DseMnsyv1dUCZDKz5Id20oLS/dP2aylBDy3URccTzITGu\nAApX+PpBRKSjNGckAZlmvPzH7azlOWaVjeYMDKvYDUp+VpbI7gr/dz1m8tmb6ho1\nEu2ENmWR+o6E+zScJuGW5y6V1qVRkQT9lgCSRWuE6WSV+bclZ8qVZfe+kwKBgDFj\nQPFk3Jmq2ofjmr4OLpZGR1QQ/DPGeL68oUSKHF3wW2OoUKOw6Zk/cr2c30kHrfaZ\nND7DIJLQSx7oppZbvWh6Mry/tAPkNtLFo0txoCtS13hge8h2iI/X+ysUxPur6Mgc\nTduwO5TATj+a5gUKlOL3OyrlFkDfd4k6vRdU9w/5AoGAF+6CN9ab5YvzW+6To/TH\ncqlrnrt0QgYHwwmh+bDNBtNJ0IWsk/zxhOH2cymVfqqWFk9Al7gk8Lu12gV0zzHL\nBcHuwzqpEKogJNV0dq1H2NcKIhpjm0nQ8S+KI4nAdrwfX9DZuNAfueLDAwDyNcfW\nPNwRc21vNKRQRmSqinPzU2o=\n-----END PRIVATE KEY-----\n",
+  "client_email": "fiboniaserver@fibonia-83e34.iam.gserviceaccount.com",
+  "client_id": "107312829017273143039",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fiboniaserver%40fibonia-83e34.iam.gserviceaccount.com"
+}
