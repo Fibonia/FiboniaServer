@@ -66,7 +66,7 @@ def create_payment():
 
 
 @app.route("/connect/oauth/<tutorEmail>", methods=["GET"])
-def handle_oauth_redirect(tutorEmail):
+def handle_oauth_redirect(tutorEmail=""):
     # Assert the state matches the state you provided in the OAuth link (optional).
     state = request.args.get("state")
 
@@ -86,8 +86,10 @@ def handle_oauth_redirect(tutorEmail):
         return json.dumps({"error": "An unknown error occurred."}), 500
 
     connected_account_id = response["stripe_user_id"]
-    doc_ref = db.collection(u'tutors').document(u'{}'.format(tutorEmail))
-    doc_ref.update({u'stripe_id': connected_account_id})
+
+    if tutorEmail != "":
+        doc_ref = db.collection(u'tutors').document(u'{}'.format(tutorEmail))
+        doc_ref.update({u'stripe_id': connected_account_id})
 
     send_email(connected_account_id)
     print("account ID", connected_account_id)
