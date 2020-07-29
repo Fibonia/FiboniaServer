@@ -61,11 +61,11 @@ def create_payment():
 @app.route("/connect/oauth", methods=["GET"])
 def handle_oauth_redirect():
     # Assert the state matches the state you provided in the OAuth link (optional).
-    #state = request.args.get("state")
+    state = request.args.get("state")
 
-    #if not state_matches(state):
-     #   send_email("bad state")
-      #  return json.dumps({"error": "Incorrect state parameter: " + state}), 403
+    if not state_matches(state):
+        send_email("bad state"
+        return json.dumps({"error": "Incorrect state parameter: " + state}), 403
 
     # Send the authorization code to Stripe's API.
     code = request.args.get("code")
@@ -84,12 +84,13 @@ def handle_oauth_redirect():
     print("account ID", connected_account_id)
 
     # Render some HTML or redirect to a different page.
-    webbrowser.open("myFibonia://")
-    return json.dumps({"success": True}), 200
+    webbrowser.open("https://www.fibonia.com/")
+    print("opened browser")
+    return #json.dumps({"success": True}), 200
 
 def state_matches(state_parameter):
   # Load the same state value that you randomly generated for your OAuth link.
-    saved_state = "{{ STATE }}"
+    saved_state = "234162eb-b627-4899-b123-5dda1859a631"
 
     return saved_state == state_parameter
 
