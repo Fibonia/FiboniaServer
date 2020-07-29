@@ -2,6 +2,10 @@ import json
 import os
 import stripe
 import gunicorn
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 # This is your real test secret API key.
 
 stripe.api_key = "sk_test_DMiK1oNbmgPE0SxC69vLO489007v8m0JWJ"
@@ -61,7 +65,7 @@ def handle_oauth_redirect():
     if not state_matches(state):
         return json.dumps({"error": "Incorrect state parameter: " + state}), 403
 
-  # Send the authorization code to Stripe's API.
+    # Send the authorization code to Stripe's API.
     code = request.args.get("code")
     try:
         response = stripe.OAuth.token(grant_type="authorization_code", code=code,)
@@ -71,10 +75,11 @@ def handle_oauth_redirect():
         return json.dumps({"error": "An unknown error occurred."}), 500
 
     connected_account_id = response["stripe_user_id"]
+    send_email(connected_account_id)
     save_account_id(connected_account_id)
     print("account ID", connected_account_id)
 
-  # Render some HTML or redirect to a different page.
+    # Render some HTML or redirect to a different page.
     return json.dumps({"success": True}), 200
 
 def state_matches(state_parameter):
@@ -86,6 +91,28 @@ def state_matches(state_parameter):
 def save_account_id(id):
   # Save the connected account ID from the response to your database.
     print("Connected account ID: ", id)
+
+
+def send_email(content):
+    data = request.json
+    name = data["name"]
+    email = data["email"]
+    className = data["class"]
+
+    server = smtplib.SMTP(host='smtp.gmail.com', port=587)
+    server.starttls()
+    server.login("fibonia.emailclient@gmail.com", "Test!2345")
+
+    msg = MIMEMultipart()
+
+    msg['From'] = "Fibonia Email Server"
+    msg['To'] = "gurkarn.goindi@berkeley.edu"
+    msg['Subject'] = "New Tutor Class Request"
+
+    msg.attach(MIMEText(content))
+
+    server.send_message(msg)
+    server.quit()
 
 @app.route("/webhook", methods=["POST"])
 def webhook_received():
