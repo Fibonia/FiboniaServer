@@ -97,10 +97,6 @@ def save_account_id(id):
 
 
 def send_email(content):
-    data = request.json
-    name = data["name"]
-    email = data["email"]
-    className = data["class"]
 
     server = smtplib.SMTP(host='smtp.gmail.com', port=587)
     server.starttls()
