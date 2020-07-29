@@ -5,6 +5,7 @@ import gunicorn
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import webbrowser
 
 # This is your real test secret API key.
 
@@ -83,6 +84,7 @@ def handle_oauth_redirect():
     print("account ID", connected_account_id)
 
     # Render some HTML or redirect to a different page.
+    webbrowser.open("myFibonia://")
     return json.dumps({"success": True}), 200
 
 def state_matches(state_parameter):
