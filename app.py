@@ -65,9 +65,11 @@ def create_payment():
 ##Methods added for Stripe Connect
 
 
-@app.route("/connect/oauth/<tutorEmail>", methods=["GET"])
-def handle_oauth_redirect(tutorEmail=""):
+@app.route("/connect/oauth/", methods=["GET"])
+def handle_oauth_redirect():
     # Assert the state matches the state you provided in the OAuth link (optional).
+    tutorEmail = request.args.get("tutorEmail")
+
     state = request.args.get("state")
 
     if not state_matches(state):
@@ -149,6 +151,32 @@ def webhook_received():
 def handle_successful_payment_intent(payment_intent):
     print(str( payment_intent))
     ##MARK: Fill this space
+
+#Emails Section (Bcz Heroku is being an ass)
+@app.route('/confirm-class', methods=['POST'])
+def confirmClass():
+    data = request.json
+    print(data)
+    name = data["name"]
+    email = data["email"]
+    className = data["class"]
+
+    server = smtplib.SMTP(host='smtp.gmail.com', port=587)
+    server.starttls()
+    server.login("fibonia.emailclient@gmail.com", "Test!2345")
+
+    msg = MIMEMultipart()
+
+    msg['From'] = "Fibonia Email Server"
+    msg['To'] = "info@fibonia.com"
+    msg['Subject'] = "New Tutor Class Request"
+
+    msg.attach(MIMEText(name + " has requested to sign up for " + className + ". Their email is " + email + "\nApprove or deny this request"))
+
+    server.send_message(msg)
+    server.quit()
+
+    return "success"
 
 if __name__ == '__main__':
     app.run()
