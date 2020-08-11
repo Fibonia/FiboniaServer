@@ -89,6 +89,8 @@ def handle_oauth_redirect():
 
     send_email(connected_account_id)
     print("account ID", connected_account_id)
+    accntParticulars = stripe.Account.retrieve(connected_account_id)
+    print("particulars", accntParticulars)
 
     # Render some HTML or redirect to a different page.clear
 
