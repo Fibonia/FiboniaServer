@@ -94,7 +94,7 @@ def handle_oauth_redirect():
     accntParticulars = stripe.Account.retrieve(connected_account_id)
     print("particulars", accntParticulars)
     email = accntParticulars["email"]
-    doc_ref = db.collection("tutor").document(email)
+    doc_ref = db.collection("tutors").document(email)
     doc_ref.update({"stripe_id": connected_account_id})
     print("sent to firebase")
 
