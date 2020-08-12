@@ -70,6 +70,8 @@ def handle_oauth_redirect():
     # Assert the state matches the state you provided in the OAuth link (optional).
     state = request.args.get("state")
 
+
+
     if not state_matches(state):
         send_email("bad state")
         return json.dumps({"error": "Incorrect state parameter: " + state}), 403
@@ -91,6 +93,10 @@ def handle_oauth_redirect():
     print("account ID", connected_account_id)
     accntParticulars = stripe.Account.retrieve(connected_account_id)
     print("particulars", accntParticulars)
+    email = accntParticulars["email"]
+    doc_ref = db.collection("tutor").document(email)
+    doc_ref.update({"stripe_id": connected_account_id})
+    print("sent to firebase")
 
     # Render some HTML or redirect to a different page.clear
 
