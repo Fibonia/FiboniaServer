@@ -197,14 +197,14 @@ def tutorMoney():
 
     body = """Dear """ + name + """,
     
-    It is nearly time to learn!
+It is nearly time to learn!
     
-    Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
+Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
 
-    Best Regards,
-    Fibonia Team
+Best Regards,
+Fibonia Team
     
-    """
+"""
     print("tutor asked for money")
     msg.attach(MIMEText(body))
     server.send_message(msg)
