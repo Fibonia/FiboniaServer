@@ -180,5 +180,38 @@ def confirmClass():
 
     return "success"
 
+@app.route('/tutor-wants-money', methods=['POST'])
+def tutorMoney():
+    data = request.json
+    name = data["name"]
+    studentEmail = data["email"]
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=25)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = studentEmail
+    msg['Subject'] = "Test Output"
+
+    body = """Dear """ + name + """,
+    
+    It is nearly time to learn!
+    
+    Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
+
+    Best Regards,
+    Fibonia Team
+    
+    """
+    print("tutor asked for money")
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
 if __name__ == '__main__':
     app.run()
