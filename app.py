@@ -193,7 +193,7 @@ def tutorMoney():
 
     msg['From'] = "appointments@fibonia.com"
     msg['To'] = studentEmail
-    msg['Subject'] = "Test Output"
+    msg['Subject'] = "Your Fibonia Appointment"
 
     body = """Dear """ + name + """,
     
