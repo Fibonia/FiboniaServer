@@ -50,14 +50,25 @@ def create_payment():
     data = request.json
     print(data["amount"])
     # Create a PaymentIntent with the order amount and currency
+    #intent = stripe.PaymentIntent.create(
+     #   amount=data["amount"],
+      #  currency='usd',
+       # customer=data['customer']
+    #)
+
     intent = stripe.PaymentIntent.create(
-        amount=data["amount"],
+        payment_method_types=['card'],
+        amount= data["amount"],
         currency='usd',
-        customer=data['customer']
+        customer = data['customer'],
+        transfer_data={
+            'destination': data['tutorID']
+        }
     )
 
     try:
         # Send publishable key and PaymentIntent details to client
+        print("went through")
         return jsonify({'publishableKey': os.getenv('STRIPE_PUBLISHABLE_KEY'), 'clientSecret': intent.client_secret})
     except Exception as e:
         return jsonify(error=str(e)), 403
