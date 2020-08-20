@@ -57,6 +57,7 @@ def create_payment():
     #)
     payAmount = data["amount"]
 
+    print("intending")
     intent = stripe.PaymentIntent.create(
         payment_method_types=['card'],
         amount= payAmount,
