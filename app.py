@@ -55,12 +55,14 @@ def create_payment():
       #  currency='usd',
        # customer=data['customer']
     #)
+    payAmount = data["amount"]
 
     intent = stripe.PaymentIntent.create(
         payment_method_types=['card'],
-        amount= data["amount"],
+        amount= payAmount,
         currency='usd',
         customer = data['customer'],
+        application_fee_amount= payAmount * 0.1,
         transfer_data={
             'destination': data['tutorID']
         }
