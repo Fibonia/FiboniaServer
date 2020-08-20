@@ -56,7 +56,7 @@ def create_payment():
        # customer=data['customer']
     #)
     payAmount = data["amount"]
-    finalAmount = int(Decimal(payAmount * 0.1))
+    finalAmount = int(float(payAmount * 0.1))
 
     print("intending")
     intent = stripe.PaymentIntent.create(
