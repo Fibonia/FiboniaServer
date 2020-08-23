@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c42bc0c8-2a3b-48b2-a862-4d5c05693a95" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="264" column="38" lean-forward="true" selection-start-line="264" selection-start-column="38" selection-end-line="264" selection-end-column="38" />
+            <state relative-caret-position="-230">
+              <caret line="194" column="20" lean-forward="true" selection-start-line="194" selection-start-column="20" selection-end-line="194" selection-end-column="20" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -150,12 +149,12 @@
       <workItem from="1597929240163" duration="177000" />
       <workItem from="1598129864556" duration="79000" />
       <workItem from="1598184626151" duration="160000" />
-      <workItem from="1598201383881" duration="954000" />
+      <workItem from="1598201383881" duration="2114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28181000" />
+    <option name="totallyTimeSpent" value="29341000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="828" extended-state="6" />
@@ -198,8 +197,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="264" column="38" lean-forward="true" selection-start-line="264" selection-start-column="38" selection-end-line="264" selection-end-column="38" />
+        <state relative-caret-position="-230">
+          <caret line="194" column="20" lean-forward="true" selection-start-line="194" selection-start-column="20" selection-end-line="194" selection-end-column="20" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

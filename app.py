@@ -230,6 +230,8 @@ Fibonia Team
 @app.route('/tutor-appt-request', methods=['POST'])
 def tutorRequest():
     data = request.json
+    print(data)
+
     tutorname = data["name"]
     group = data['group']
     time = data['time']
