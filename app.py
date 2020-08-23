@@ -199,6 +199,7 @@ def tutorMoney():
     data = request.json
     name = data["name"]
     studentEmail = data["email"]
+    paymentCode = data["payCode"]
 
     server = smtplib.SMTP(host='mail.fibonia.com', port=25)
     server.starttls()
@@ -209,16 +210,19 @@ def tutorMoney():
     msg['To'] = studentEmail
     msg['Subject'] = "Your Fibonia Appointment"
 
-    body = """Dear """ + name + """,
+    body = """Dear {},
     
 It is nearly time to learn!
     
 Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
 
+Click here to initiate payment https://www.fibonia.com/payment/index.php?code={} 
+
 Best Regards,
 Fibonia Team
     
-"""
+""".format(name, paymentCode)
+
     print("tutor asked for money")
     msg.attach(MIMEText(body))
     server.send_message(msg)
