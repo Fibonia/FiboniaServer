@@ -242,6 +242,7 @@ def tutorRequest():
     rejectUID = data['rejectUID']
     classForEmail = classname
     classForEmail.replace(" ", "%20")
+    print(classForEmail)
 
     groupString = ""
     if group:
