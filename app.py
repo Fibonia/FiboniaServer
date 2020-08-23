@@ -86,8 +86,6 @@ def handle_oauth_redirect():
     # Assert the state matches the state you provided in the OAuth link (optional).
     state = request.args.get("state")
 
-
-
     if not state_matches(state):
         send_email("bad state")
         return json.dumps({"error": "Incorrect state parameter: " + state}), 403
@@ -228,6 +226,56 @@ Fibonia Team
     server.quit()
 
     return "success"
+
+@app.route('/tutor-appt-request', methods=['POST'])
+def tutorRequest():
+    data = request.json
+    tutorname = data["name"]
+    group = data['group']
+    time = data['time']
+    classname = data['class']
+    email = data['email']
+    date = data['date']
+    acceptUID = data['acceptUID']
+    rejectUID = data['rejectUID']
+    classForEmail = classname
+    classForEmail.replace(" ", "%20")
+
+    groupString = ""
+    if group:
+        groupString = "are"
+    else:
+        groupString = "are not"
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=587)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = email
+    msg['Subject'] = "Your Fibonia Appointment"
+
+    body = """Dear {},
+
+You have a new tutoring request for {} at {} GMT on {} and they {} willing to participate in group tutoring.
+
+Login to the app or website to make any changes and see this appointment in your local time.
+
+Click here to accept the appointment: https://www.fibonia.com/response.php?email={}&code={}&class={}
+Click here to reject the appointment: https://www.fibonia.com/response.php?email={}&code={}&class={}
+
+Best Regards,
+Fibonia Team
+    """.format(tutorname, classname, time, date, groupString, email, acceptUID, classForEmail, email, rejectUID, classForEmail)
+
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
 
 if __name__ == '__main__':
     app.run()
