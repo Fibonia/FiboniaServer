@@ -170,7 +170,7 @@ def openExpress():
     stripe_id = data["stripe"]
     output = stripe.Account.create_login_link(stripe_id)
     print(output)
-    return output["url"]
+    return jsonify(output)
 
 #Emails Section (Bcz Heroku is being an ass)
 @app.route('/confirm-class', methods=['POST'])
