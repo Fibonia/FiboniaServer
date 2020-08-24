@@ -285,6 +285,48 @@ Fibonia Team
 
     return "success"
 
+@app.route('/tutor-appt-reject', methods=['POST'])
+def tutorRequest():
+    data = request.json
+    print(data)
+
+    name = data['name']
+    time = data['time']
+    classname = data['class']
+    studentemail = data['email']
+
+    print(classForEmail)
+
+    groupString = ""
+    if group:
+        groupString = "are"
+    else:
+        groupString = "are not"
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=587)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = studentemail
+    msg['Subject'] = "Your Fibonia Appointment"
+
+    body = """Dear {},
+
+Your tutor has rejected your request for an appointment on {} for {}. (All times in GMT)
+
+Best Regards,
+Fibonia Team
+    """.format(name, time, classname)
+
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
 
 if __name__ == '__main__':
     app.run()
