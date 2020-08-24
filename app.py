@@ -165,7 +165,7 @@ def handle_successful_payment_intent(payment_intent):
     ##MARK: Fill this space
 
 @app.route("/access-express/<stripe_id>", methods=["GET"])
-def openExpress():
+def openExpress(stripe_id):
     output = stripe.Account.create_login_link(stripe_id)
     print(output)
     return output["url"]
