@@ -11,7 +11,7 @@ from firebase_admin import firestore
 
 # This is your real test secret API key.
 
-stripe.api_key = "sk_test_DMiK1oNbmgPE0SxC69vLO489007v8m0JWJ"
+stripe.api_key = "pk_live_MWSXfRNcKD5h89THVll1lzG200e0D3Mwdb"
 
 cred = credentials.Certificate('fibonia-83e34-83001bbabd20.json')
 firebase_admin.initialize_app(cred)
