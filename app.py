@@ -87,7 +87,6 @@ def handle_oauth_redirect():
     state = request.args.get("state")
 
     if not state_matches(state):
-        send_email("bad state")
         return json.dumps({"error": "Incorrect state parameter: " + state}), 403
 
     # Send the authorization code to Stripe's API.
@@ -95,15 +94,12 @@ def handle_oauth_redirect():
     try:
         response = stripe.OAuth.token(grant_type="authorization_code", code=code,)
     except stripe.oauth_error.OAuthError as e:
-        send_email("bad auth code")
         return json.dumps({"error": "Invalid authorization code: " + code}), 400
     except Exception as e:
-        send_email("other error")
         return json.dumps({"error": "An unknown error occurred."}), 500
 
     connected_account_id = response["stripe_user_id"]
 
-    send_email(connected_account_id)
     print("account ID", connected_account_id)
     accntParticulars = stripe.Account.retrieve(connected_account_id)
     print("particulars", accntParticulars)
@@ -174,7 +170,7 @@ def openExpress():
     stripe_id = data["stripe"]
     output = stripe.Account.create_login_link(stripe_id)
     print(output)
-    return jsonify(output)
+    return output["url"]
 
 #Emails Section (Bcz Heroku is being an ass)
 @app.route('/confirm-class', methods=['POST'])
