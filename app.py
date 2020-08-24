@@ -164,10 +164,8 @@ def handle_successful_payment_intent(payment_intent):
     print(str( payment_intent))
     ##MARK: Fill this space
 
-@app.route("/access-express", methods=["POST"])
+@app.route("/access-express/<stripe_id>", methods=["GET"])
 def openExpress():
-    data = request.json
-    stripe_id = data["stripe"]
     output = stripe.Account.create_login_link(stripe_id)
     print(output)
     return jsonify(output)
