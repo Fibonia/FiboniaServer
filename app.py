@@ -168,6 +168,14 @@ def handle_successful_payment_intent(payment_intent):
     print(str( payment_intent))
     ##MARK: Fill this space
 
+@app.route("/access-express", methods=["POST"])
+def openExpress():
+    data = request.json
+    stripe_id = data["stripe"]
+    output = stripe.Account.create_login_link(stripe_id)
+    print(output)
+    return jsonify(output)
+
 #Emails Section (Bcz Heroku is being an ass)
 @app.route('/confirm-class', methods=['POST'])
 def confirmClass():
