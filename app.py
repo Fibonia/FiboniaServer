@@ -75,8 +75,7 @@ def create_payment():
         	payment_method_types=['card'],
         	amount= payAmount,
         	currency='usd',
-        	customer = data['customer'],
-        	application_fee_amount= finalAmount,
+        	customer = data['customer']
     )
     print("intent, ", intent)
 
