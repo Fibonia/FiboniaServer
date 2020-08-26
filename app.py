@@ -57,19 +57,31 @@ def create_payment():
     #)
     payAmount = data["amount"]
     finalAmount = int(float(payAmount * 0.1))
-
-    print("intending")
-    intent = stripe.PaymentIntent.create(
-        payment_method_types=['card'],
-        amount= payAmount,
-        currency='usd',
-        customer = data['customer'],
-        application_fee_amount= finalAmount,
-        transfer_data={
-            'destination': data['tutorID']
-        }
+    if "tutorID" in data:
+    	print("intending")
+    	intent = stripe.PaymentIntent.create(
+        	payment_method_types=['card'],
+        	amount= payAmount,
+        	currency='usd',
+        	customer = data['customer'],
+        	application_fee_amount= finalAmount,
+        	transfer_data={
+            	'destination': data['tutorID']
+        	}
+    	)
+    else:
+    	print("intending")
+    	intent = stripe.PaymentIntent.create(
+        	payment_method_types=['card'],
+        	amount= payAmount,
+        	currency='usd',
+        	customer = data['customer'],
+        	application_fee_amount= finalAmount,
+        	transfer_data={
+            	'destination': data['tutorID']
+        	}
     )
-    print("intent, ", intent)
+        print("intent, ", intent)
 
     try:
         # Send publishable key and PaymentIntent details to client
@@ -118,24 +130,6 @@ def state_matches(state_parameter):
 
     return saved_state == state_parameter
 
-
-
-def send_email(content):
-
-    server = smtplib.SMTP(host='smtp.gmail.com', port=587)
-    server.starttls()
-    server.login("fibonia.emailclient@gmail.com", "Test!2345")
-
-    msg = MIMEMultipart()
-
-    msg['From'] = "Fibonia Email Server"
-    msg['To'] = "gurkarn.goindi@berkeley.edu"
-    msg['Subject'] = "New Tutor Class Request"
-
-    msg.attach(MIMEText(content))
-
-    server.send_message(msg)
-    server.quit()
 
 @app.route("/webhook", methods=["POST"])
 def webhook_received():
@@ -317,6 +311,32 @@ Fibonia Team
 
     server.quit()
 
+    return "success"
+
+@app.route('/venmo-payout', methods=['POST'])
+def venmoPayout():
+    data = request.json
+    print(data)
+    name = data["name"]
+    email = data["email"]
+    venmo = data["venmo"]
+
+    server = smtplib.SMTP(host='smtp.gmail.com', port=587)
+    server.starttls()
+    server.login("fibonia.emailclient@gmail.com", "Test!2345")
+
+    msg = MIMEMultipart()
+
+    msg['From'] = "Fibonia Email Server"
+    msg['To'] = "requests@fibonia.com"
+    msg['Subject'] = "Venmo Payout"
+
+    msg.attach(MIMEText("{} wants to receive venmo payout for id {} and email {}".format(name, venmo, email)))
+
+    server.send_message(msg)
+    server.quit()
+
+    return "success"
     return "success"
 
 
