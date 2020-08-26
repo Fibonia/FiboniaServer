@@ -77,9 +77,6 @@ def create_payment():
         	currency='usd',
         	customer = data['customer'],
         	application_fee_amount= finalAmount,
-        	transfer_data={
-            	'destination': data['tutorID']
-        	}
     )
     print("intent, ", intent)
 
@@ -336,7 +333,6 @@ def venmoPayout():
     server.send_message(msg)
     server.quit()
 
-    return "success"
     return "success"
 
 
