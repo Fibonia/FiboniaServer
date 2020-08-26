@@ -48,7 +48,6 @@ def retrieveCustomer(id):
 @app.route('/create-payment-intent', methods=['POST'])
 def create_payment():
     data = request.json
-    print(data["amount"])
     # Create a PaymentIntent with the order amount and currency
     #intent = stripe.PaymentIntent.create(
      #   amount=data["amount"],
@@ -57,6 +56,7 @@ def create_payment():
     #)
     payAmount = data["amount"]
     finalAmount = int(float(payAmount * 0.1))
+    print("final amount", finalAmount)
     if "tutorID" in data:
     	print("intending")
     	intent = stripe.PaymentIntent.create(
