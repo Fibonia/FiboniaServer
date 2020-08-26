@@ -81,7 +81,7 @@ def create_payment():
             	'destination': data['tutorID']
         	}
     )
-        print("intent, ", intent)
+    print("intent, ", intent)
 
     try:
         # Send publishable key and PaymentIntent details to client
