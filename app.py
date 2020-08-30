@@ -357,6 +357,83 @@ Fibonia Team
 
     return "success"
 
+@app.route('/tutor-appt-cancel', methods=['POST'])
+def tutorCancel():
+    data = request.json
+    print(data)
+
+    name = data['name']
+    timing = data['time']
+    classname = data['class']
+    studentemail = data['email']
+    date = " ".join(timing.split()[0:-1])
+    time = timing.split()[-1]
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=587)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = studentemail
+    msg['Subject'] = "Fibonia Appointment Request Rejected"
+
+    body = """Dear {},
+
+Your tutor has cancelled your appointment on {} at {}hrs GMT for {}. 
+
+Sorry about this. Please book an appointment with a different tutor, or at a different time. Reach out to us at info@fibonia.com if you need any help.
+
+Best Regards,
+Fibonia Team
+    """.format(name, date, time, classname)
+
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
+@app.route('/student-appt-cancel', methods=['POST'])
+def tutorCancel():
+    data = request.json
+    print(data)
+
+    name = data['name']
+    timing = data['time']
+    classname = data['class']
+    tutoremail = data['email']
+    date = " ".join(timing.split()[0:-1])
+    time = timing.split()[-1]
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=587)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = tutoremail
+    msg['Subject'] = "Fibonia Appointment Request Rejected"
+
+    body = """Dear {},
+
+Your student has cancelled the appointment on {} at {}hrs GMT for {}. 
+
+Sorry about this. Reach out to us at info@fibonia.com if you need any help.
+
+Best Regards,
+Fibonia Team
+    """.format(name, date, time, classname)
+
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
+
 @app.route('/venmo-payout', methods=['POST'])
 def venmoPayout():
     data = request.json
