@@ -396,7 +396,7 @@ Fibonia Team
     return "success"
 
 @app.route('/student-appt-cancel', methods=['POST'])
-def tutorCancel():
+def studentCancel():
     data = request.json
     print(data)
 
