@@ -309,6 +309,44 @@ Fibonia Team
 
     return "success"
 
+@app.route('/tutor-appt-accept', methods=['POST'])
+def tutorAccept():
+    data = request.json
+    print(data)
+
+    name = data['name']
+    time = data['time']
+    classname = data['class']
+    studentemail = data['email']
+
+    server = smtplib.SMTP(host='mail.fibonia.com', port=587)
+    server.starttls()
+    server.login("appointments@fibonia.com", "GloriousCeiling!#%")
+    msg = MIMEMultipart()
+
+    msg['From'] = "appointments@fibonia.com"
+    msg['To'] = studentemail
+    msg['Subject'] = "Fibonia Appointment Request Rejected"
+
+    body = """Dear {},
+
+Your tutor has accepted your request for an appointment on {} for {} (All times in GMT). 
+
+Your tutor will begin the appointment 5-10 mins before the scheduled time in order to allow you to pay them. Please view the appointment on the website or app to click on your tutor's Zoom link to begin.
+
+Happy Learning!
+
+Best Regards,
+Fibonia Team
+    """.format(name, time, classname)
+
+    msg.attach(MIMEText(body))
+    server.send_message(msg)
+
+    server.quit()
+
+    return "success"
+
 @app.route('/venmo-payout', methods=['POST'])
 def venmoPayout():
     data = request.json
