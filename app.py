@@ -264,6 +264,8 @@ Login to the app or website to make any changes and see this appointment in your
 Click here to accept the appointment: https://www.fibonia.com/response.php?email={}&code={}&class={}
 Click here to reject the appointment: https://www.fibonia.com/response.php?email={}&code={}&class={}
 
+Please note that appointment times on the app and website are in your local timezone.
+
 Best Regards,
 Fibonia Team
     """.format(tutorname, classname, time, date, groupString, email, acceptUID, classForEmail, email, rejectUID, classForEmail)
@@ -339,6 +341,8 @@ def tutorAccept():
 Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}. 
 
 Your tutor will begin the appointment 5-10 mins before the scheduled time in order to allow you to pay them. Please view the appointment on the website or app to click on your tutor's Zoom link to begin.
+
+Please note that appointment times on the app and website are in your local timezone.
 
 Happy Learning!
 
