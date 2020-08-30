@@ -285,7 +285,7 @@ def tutorReject():
     classname = data['class']
     studentemail = data['email']
     date = " ".join(timing.split()[0:-1])
-	time = timing.split()[-1]
+    time = timing.split()[-1]
 
     server = smtplib.SMTP(host='mail.fibonia.com', port=587)
     server.starttls()
