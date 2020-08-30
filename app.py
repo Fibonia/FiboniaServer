@@ -281,9 +281,11 @@ def tutorReject():
     print(data)
 
     name = data['name']
-    time = data['time']
+    timing = data['time']
     classname = data['class']
     studentemail = data['email']
+    date = " ".join(timing.split()[0:-1])
+	time = timing.split()[-1]
 
     server = smtplib.SMTP(host='mail.fibonia.com', port=587)
     server.starttls()
@@ -296,11 +298,13 @@ def tutorReject():
 
     body = """Dear {},
 
-Your tutor has rejected your request for an appointment on {} for {}. (All times in GMT)
+Your tutor has rejected your request for an appointment on {} at {}hrs for {}. (All times in GMT)
+
+Sorry about this. Please book an appointment with a different tutor, or at a different time. Reach out to us at info@fibonia.com if you need any help.
 
 Best Regards,
 Fibonia Team
-    """.format(name, time, classname)
+    """.format(name, date, time, classname)
 
     msg.attach(MIMEText(body))
     server.send_message(msg)
@@ -315,9 +319,11 @@ def tutorAccept():
     print(data)
 
     name = data['name']
-    time = data['time']
+    timing = data['time']
     classname = data['class']
     studentemail = data['email']
+    date = " ".join(timing.split()[0:-1])
+    time = timing.split()[-1]
 
     server = smtplib.SMTP(host='mail.fibonia.com', port=587)
     server.starttls()
@@ -330,7 +336,7 @@ def tutorAccept():
 
     body = """Dear {},
 
-Your tutor has accepted your request for an appointment on {} for {} (All times in GMT). 
+Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}. 
 
 Your tutor will begin the appointment 5-10 mins before the scheduled time in order to allow you to pay them. Please view the appointment on the website or app to click on your tutor's Zoom link to begin.
 
@@ -338,7 +344,7 @@ Happy Learning!
 
 Best Regards,
 Fibonia Team
-    """.format(name, time, classname)
+    """.format(name, date, time, classname)
 
     msg.attach(MIMEText(body))
     server.send_message(msg)
