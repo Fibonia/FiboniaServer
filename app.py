@@ -253,7 +253,7 @@ def tutorRequest():
 
     msg['From'] = "appointments@fibonia.com"
     msg['To'] = email
-    msg['Subject'] = "Your Fibonia Appointment"
+    msg['Subject'] = "New Fibonia Appointment"
 
     body = """Dear {},
 
@@ -334,7 +334,7 @@ def tutorAccept():
 
     msg['From'] = "appointments@fibonia.com"
     msg['To'] = studentemail
-    msg['Subject'] = "Fibonia Appointment Request Rejected"
+    msg['Subject'] = "Fibonia Appointment Request Accepted"
 
     body = """Dear {},
 
@@ -376,7 +376,7 @@ def tutorCancel():
 
     msg['From'] = "appointments@fibonia.com"
     msg['To'] = studentemail
-    msg['Subject'] = "Fibonia Appointment Request Rejected"
+    msg['Subject'] = "Fibonia Appointment Cancelled"
 
     body = """Dear {},
 
@@ -414,7 +414,7 @@ def studentCancel():
 
     msg['From'] = "appointments@fibonia.com"
     msg['To'] = tutoremail
-    msg['Subject'] = "Fibonia Appointment Request Rejected"
+    msg['Subject'] = "Fibonia Appointment Cancelled"
 
     body = """Dear {},
 
