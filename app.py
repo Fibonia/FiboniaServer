@@ -11,6 +11,7 @@ from email.mime.text import MIMEText
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import requests
 
 # This is your real test secret API key.
 
