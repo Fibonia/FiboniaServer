@@ -502,7 +502,7 @@ def transcript_call(url1,req,ourclass=0):
         lvl = ""
         grade=""
         for i in range(0,len(pdf.pages)):
-          page = pdf.pages[i]
+          page = pdf.pages[0]
           text = page.extract_text(x_tolerance=2)
           lines = text.split('\n')
           for line in lines:
