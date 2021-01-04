@@ -559,6 +559,11 @@ def transcript_check():
     input_req = data['req']
     input_ourclass = data['ourclass']
     return transcript_call(input_url, input_req, input_ourclass)
+
+@app.route('/schools', methods=['GET'])
+def schools():
+    colleges = ["UC Berkeley", "Other"]
+    return json.dumps({"schools": colleges})
     
 
 
