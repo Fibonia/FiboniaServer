@@ -565,13 +565,14 @@ def schools():
     colleges = ["--Select School--", "UC Berkeley", "Other"]
     return json.dumps({"schools": colleges})
 
-@app.route('/get_classes', methods=['GET'])
+@app.route('/get_classes', methods=['POST'])
 def berk_classes():
 	data = request.json
-	print("data", data)
 	school = data['school']
 	with open('classes.json', 'r') as f:
 		classes_dict = json.load(f)
+    print("school: ", school)
+    print("classes_dict: ", classes_dict)
 	out_dict = classes_dict[school]
 	return json.dumps(out_dict)
 
