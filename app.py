@@ -567,14 +567,15 @@ def schools():
 
 @app.route('/get_classes', methods=['POST'])
 def berk_classes():
-	data = request.json
-	school = data['school']
-	with open('classes.json', 'r') as f:
-		classes_dict = json.load(f)
+    print("hello there")
+    data = request.json
+    school = data['school']
+    with open('classes.json', 'r') as f:
+        classes_dict = json.load(f)
     print("school: ", school)
     print("classes_dict: ", classes_dict)
-	out_dict = classes_dict[school]
-	return json.dumps(out_dict)
+    out_dict = classes_dict[school]
+    return json.dumps(out_dict)
 
 
 
