@@ -565,9 +565,10 @@ def schools():
     colleges = ["--Select School--", "UC Berkeley", "Other"]
     return json.dumps({"schools": colleges})
 
-@app.route('/get_classes', methods=['GET'])
+@app.route('/get_classes', methods=['POST'])
 def berk_classes():
     data = request.json
+    print(data)
     school = data['school']
     with open('classes.json', 'r') as f:
         ret_val = json.load(f)
