@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c42bc0c8-2a3b-48b2-a862-4d5c05693a95" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-    </list>
+    <list default="true" id="c42bc0c8-2a3b-48b2-a862-4d5c05693a95" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="570" column="15" lean-forward="true" selection-start-line="570" selection-start-column="15" selection-end-line="570" selection-end-column="15" />
+            <state relative-caret-position="122">
+              <caret line="33" column="13" lean-forward="true" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="28" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -41,11 +39,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-14" />
-    <option name="y" value="23" />
-    <option name="width" value="1294" />
-    <option name="height" value="732" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1280" />
+    <option name="y" value="-10" />
+    <option name="width" value="1366" />
+    <option name="height" value="702" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -168,23 +166,23 @@
       <workItem from="1598264529551" duration="245000" />
       <workItem from="1598274522621" duration="1086000" />
       <workItem from="1598295839753" duration="192000" />
-      <workItem from="1610645894488" duration="5874000" />
+      <workItem from="1610645894488" duration="7512000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39430000" />
+    <option name="totallyTimeSpent" value="41068000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="732" extended-state="6" />
+    <frame x="1280" y="-10" width="1366" height="702" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19224556" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17975831" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.328125" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.328125" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -192,7 +190,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3296875" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.325" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3409836" />
       <window_info anchor="bottom" id="Python Console" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -217,8 +215,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="570" column="15" lean-forward="true" selection-start-line="570" selection-start-column="15" selection-end-line="570" selection-end-column="15" />
+        <state relative-caret-position="122">
+          <caret line="33" column="13" lean-forward="true" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
