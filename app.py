@@ -12,6 +12,10 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import requests
+from flask_cors import CORS
+import pymongo
+import ssl
+
 
 # This is your real test secret API key.
 
@@ -19,6 +23,12 @@ stripe.api_key = "sk_live_51GnFd7J3ltnZwXIYKuknbbtWbCUsd56nEeze7WUa9JuG9iRNCAiMn
 
 cred = credentials.Certificate('fibonia-83e34-83001bbabd20.json')
 firebase_admin.initialize_app(cred)
+
+# MongoDB Credentials
+mongo_url = "mongodb+srv://gurk91:Fibonia!2345@cluster0.a5ggi.mongodb.net/test?retryWrites=true&w=majority"
+client = pymongo.MongoClient(mongo_url, ssl=True,ssl_cert_reqs=ssl.CERT_NONE)
+mg_db = client.get_database('FibTest')
+
 
 db = firestore.client()
 
@@ -576,6 +586,12 @@ def berk_classes():
     out_dict = classes_dict[school]
     return json.dumps(out_dict)
 
+@app.route('/add_data', methods=['POST'])
+def addData():
+    table = mg_db.Users
+    data = request.json
+    table.insert_one(data)
+    return "Data Added"
 
 
 if __name__ == '__main__':
