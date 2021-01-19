@@ -207,16 +207,16 @@ def tutorMoney():
     msg['Subject'] = "Your Fibonia Appointment"
 
     body = """Dear {},
-    
-It is nearly time to learn!
-    
-Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
 
-Click here to initiate payment https://www.fibonia.com/payment/index.php?code={} 
+It is nearly time to learn!
+
+Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked.
+
+Click here to initiate payment https://www.fibonia.com/payment/index.php?code={}
 
 Best Regards,
 Fibonia Team
-    
+
 """.format(name, paymentCode)
 
     print("tutor asked for money")
@@ -342,7 +342,7 @@ def tutorAccept():
 
     body = """Dear {},
 
-Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}. 
+Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}.
 
 Your tutor will begin the appointment 5-10 mins before the scheduled time in order to allow you to pay them. Please view the appointment on the website or app to click on your tutor's Zoom link to begin.
 
@@ -384,7 +384,7 @@ def tutorCancel():
 
     body = """Dear {},
 
-Your tutor has cancelled your appointment on {} at {}hrs GMT for {}. 
+Your tutor has cancelled your appointment on {} at {}hrs GMT for {}.
 
 Sorry about this. Please book an appointment with a different tutor, or at a different time. Reach out to us at info@fibonia.com if you need any help.
 
@@ -422,7 +422,7 @@ def studentCancel():
 
     body = """Dear {},
 
-Your student has cancelled the appointment on {} at {}hrs GMT for {}. 
+Your student has cancelled the appointment on {} at {}hrs GMT for {}.
 
 Sorry about this. Reach out to us at info@fibonia.com if you need any help.
 
@@ -480,17 +480,17 @@ def transcript_call(url1,req,ourclass=0):
     else:
       ourfile = "tstyes.PNG"
       urllib.request.urlretrieve(url1, "tstyes.PNG")
-    image = Image.open(ourfile) 
-    pdf_bytes = img2pdf.convert(image.filename) 
-    file = open(invoice_pdf, "wb") 
-    file.write(pdf_bytes) 
-    image.close() 
+    image = Image.open(ourfile)
+    pdf_bytes = img2pdf.convert(image.filename)
+    file = open(invoice_pdf, "wb")
+    file.write(pdf_bytes)
+    image.close()
     file.close()
     os.remove(ourfile)
   if url1[len(url1)-3:len(url1)] == "pdf":
     invoice = url1
     invoice_pdf = download_file(invoice)
-  url1 = invoice_pdf 
+  url1 = invoice_pdf
   try:
     with pdfplumber.open(invoice_pdf) as pdf:
         os.remove(invoice_pdf)
