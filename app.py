@@ -588,10 +588,11 @@ def berk_classes():
 
 @app.route('/add_data', methods=['POST'])
 def addData():
-    table = mg_db.Users
-    data = request.json
+    data = request.json["value"]
+    ourstr = "mg_db."+request.json["collection"]
+    table = eval(ourstr)
     table.insert_one(data)
-    return "Data Added"
+    return "Data Inserted"
 
 
 if __name__ == '__main__':
