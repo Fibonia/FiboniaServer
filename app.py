@@ -17,6 +17,7 @@ from flask_cors import CORS
 import pymongo
 import ssl
 from hashids import Hashids
+import pyotp
 
 
 
@@ -137,7 +138,20 @@ def retrieve_referral(name):
 @app.route('/decrypt-referral-code/<hashid>', methods=['GET'])
 def decrypt_referral(hashid):
     decrypted = hashids.decrypt(str(hashid))
-    return decrypted
+    return str(decrypted[0])
+
+secret = pyotp.random_base32()
+totp = pyotp.TOTP(secret, interval=600)
+
+@app.route('/retrieve-otp/', methods=['GET'])
+def otp():
+    # the generated otp value (6 digits)
+    return totp.now()
+
+# Returns a string, not a boolean (i.e. 'True'/'False')
+@app.route('/verify-otp/<otp>', methods=['GET'])
+def verify(otp):
+    return str(totp.verify(otp))
 
 @app.route('/retrieve-discount-code/', methods=['GET'])
 def retrieve_discount():
