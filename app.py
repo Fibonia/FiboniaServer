@@ -109,30 +109,14 @@ def create_payment():
 # instantiation of an unique Hashid object
 hashids = Hashids(min_length=7, alphabet='abcdefghijklmnopqrstuvwxyz0123456789', salt = 'fibonia')
 
-@app.route('/retrieve-referral-code/<name>', methods=['GET'])
-def retrieve_referral(name):
-
-    letters = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'g':7, 'h':8, 'i':9, 'j':10, 'k':11,
-            'l':12, 'm':13, 'n':14, 'o':15, 'p':16, 'q':17, 'r':18, 's':19, 't':20, 'u':21,
-            'v':22, 'w':23, 'x':24, 'y':25, 'z':26}
-
-    #Converts name (string) to int to use it as the parameter input for the hashid function
-    def alpha_to_num(name):
-        sum = 0
-        count = 0
-        name = ''.join(c.lower() for c in name if not c.isspace())
-        for i in name:
-            if count % 2 == 0:
-                sum += letters.get(i)
-            else: 
-                sum *= letters.get(i)
-            count += 1
-        return sum
-
-    #numerical encoding of the name
-    num = alpha_to_num(name)
+# Since it takes a String data type rather than the ObjectID(Int) data type, 
+# you need to first convert the ObjectID(Int) to String and save it as a 
+# variable to pass into this method. 
+# i.e. user_id = str(ObjectID.str)
+@app.route('/retrieve-referral-code/<uniqueid>', methods=['GET'])
+def retrieve_referral(uniqueid):
     #encode
-    hashid = hashids.encrypt(num)
+    hashid = hashids.encrypt(str(uniqueid))
     return hashid
 
 @app.route('/decrypt-referral-code/<hashid>', methods=['GET'])
@@ -140,6 +124,7 @@ def decrypt_referral(hashid):
     decrypted = hashids.decrypt(str(hashid))
     return str(decrypted[0])
 
+# pyotp instance instantiation
 secret = pyotp.random_base32()
 totp = pyotp.TOTP(secret, interval=600)
 
