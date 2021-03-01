@@ -633,5 +633,44 @@ def berk_classes():
     out_dict = classes_dict[school]
     return json.dumps(out_dict)
 
+@app.route('/add_data', methods=['POST'])
+def addData():
+    data = request.json["value"]
+    ourstr = "mg_db."+request.json["collection"]
+    table = eval(ourstr)
+    table.insert_one(data)
+    return "Data Inserted"
+
+@app.route('/delete_data', methods=['POST'])
+def deleteData():
+    ourid = request.json["id"]
+    ourstr = "mg_db."+request.json["collection"]
+    table = eval(ourstr)
+    myquery = {"_id":ObjectId(ourid)}
+    table.delete_one(myquery)
+    return "Data Deleted"
+
+@app.route('/select_data', methods=['POST'])
+def selectData():
+    ourid = request.json["id"]
+    ourstr = "mg_db."+request.json["collection"]
+    table = eval(ourstr)
+    myquery = {"_id":ObjectId(ourid)}
+    mydoc = table.find(myquery)
+    list_cur = list(mydoc)
+    mydoc = dumps(list_cur)
+    return mydoc
+
+@app.route('/update_data', methods=['POST'])
+def updateData():
+    ourid = request.json["id"]
+    value = request.json["value"]
+    ourstr = "mg_db."+request.json["collection"]
+    table = eval(ourstr)
+    myquery = {"_id":ObjectId(ourid)}
+    newvalues = { "$set": value }
+    table.update_one(myquery,newvalues)
+    return "Data Updated"
+
 if __name__ == '__main__':
     app.run()
