@@ -5,6 +5,7 @@ import gunicorn
 import smtplib
 import pdfplumber
 import img2pdf
+import random
 from PIL import Image
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -15,6 +16,9 @@ import requests
 from flask_cors import CORS
 import pymongo
 import ssl
+from hashids import Hashids
+import pyotp
+
 
 
 # This is your real test secret API key.
@@ -102,6 +106,49 @@ def create_payment():
 
 ##Methods added for Stripe Connect
 
+# instantiation of an unique Hashid object
+hashids = Hashids(min_length=7, alphabet='abcdefghijklmnopqrstuvwxyz0123456789', salt = 'fibonia')
+
+# Since it takes a String data type rather than the ObjectID(Int) data type, 
+# you need to first convert the ObjectID(Int) to String and save it as a 
+# variable to pass into this method. 
+# i.e. user_id = str(ObjectID.str)
+@app.route('/retrieve-referral-code/<uniqueid>', methods=['GET'])
+def retrieve_referral(uniqueid):
+    #encode
+    hashid = hashids.encrypt(str(uniqueid))
+    return hashid
+
+@app.route('/decrypt-referral-code/<hashid>', methods=['GET'])
+def decrypt_referral(hashid):
+    decrypted = hashids.decrypt(str(hashid))
+    return str(decrypted[0])
+
+# pyotp instance instantiation
+secret = pyotp.random_base32()
+totp = pyotp.TOTP(secret, interval=600)
+
+@app.route('/retrieve-otp/', methods=['GET'])
+def otp():
+    # the generated otp value (6 digits)
+    return totp.now()
+
+# Returns a string, not a boolean (i.e. 'True'/'False')
+@app.route('/verify-otp/<otp>', methods=['GET'])
+def verify(otp):
+    return str(totp.verify(otp))
+
+@app.route('/retrieve-discount-code/', methods=['GET'])
+def retrieve_discount():
+    numbers = {1:'a', 2:'b', 3:'c', 4:'d', 5:'e', 6:'f', 7:'g', 8:'h', 9:'i', 10:'j', 11:'k',
+            12:'l', 13:'m', 14:'n', 15:'o', 16:'p', 17:'q', 18:'r', 19:'s', 20:'t', 21:'u',
+            22:'v', 23:'w', 24:'x', 25:'y', 26:'z'}
+    code = ''
+    for _ in range(3):
+        code += str(random.randint(10,26))
+    for _ in range(4):
+        code += numbers[random.randint(1,26)]
+    return code
 
 @app.route("/connect/oauth/", methods=["GET"])
 def handle_oauth_redirect():
@@ -217,16 +264,16 @@ def tutorMoney():
     msg['Subject'] = "Your Fibonia Appointment"
 
     body = """Dear {},
-    
-It is nearly time to learn!
-    
-Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked. 
 
-Click here to initiate payment https://www.fibonia.com/payment/index.php?code={} 
+It is nearly time to learn!
+
+Your tutor has requested payment for an upcoming appointment. Please log on to the app or website to start your appointment. You will be billed for the duration of the appointment you have booked.
+
+Click here to initiate payment https://www.fibonia.com/payment/index.php?code={}
 
 Best Regards,
 Fibonia Team
-    
+
 """.format(name, paymentCode)
 
     print("tutor asked for money")
@@ -352,7 +399,7 @@ def tutorAccept():
 
     body = """Dear {},
 
-Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}. 
+Your tutor has accepted your request for an appointment on {} at {}hrs GMT for {}.
 
 Your tutor will begin the appointment 5-10 mins before the scheduled time in order to allow you to pay them. Please view the appointment on the website or app to click on your tutor's Zoom link to begin.
 
@@ -394,7 +441,7 @@ def tutorCancel():
 
     body = """Dear {},
 
-Your tutor has cancelled your appointment on {} at {}hrs GMT for {}. 
+Your tutor has cancelled your appointment on {} at {}hrs GMT for {}.
 
 Sorry about this. Please book an appointment with a different tutor, or at a different time. Reach out to us at info@fibonia.com if you need any help.
 
@@ -432,7 +479,7 @@ def studentCancel():
 
     body = """Dear {},
 
-Your student has cancelled the appointment on {} at {}hrs GMT for {}. 
+Your student has cancelled the appointment on {} at {}hrs GMT for {}.
 
 Sorry about this. Reach out to us at info@fibonia.com if you need any help.
 
@@ -490,17 +537,17 @@ def transcript_call(url1,req,ourclass=0):
     else:
       ourfile = "tstyes.PNG"
       urllib.request.urlretrieve(url1, "tstyes.PNG")
-    image = Image.open(ourfile) 
-    pdf_bytes = img2pdf.convert(image.filename) 
-    file = open(invoice_pdf, "wb") 
-    file.write(pdf_bytes) 
-    image.close() 
+    image = Image.open(ourfile)
+    pdf_bytes = img2pdf.convert(image.filename)
+    file = open(invoice_pdf, "wb")
+    file.write(pdf_bytes)
+    image.close()
     file.close()
     os.remove(ourfile)
   if url1[len(url1)-3:len(url1)] == "pdf":
     invoice = url1
     invoice_pdf = download_file(invoice)
-  url1 = invoice_pdf 
+  url1 = invoice_pdf
   try:
     with pdfplumber.open(invoice_pdf) as pdf:
         os.remove(invoice_pdf)
@@ -585,15 +632,6 @@ def berk_classes():
     classes_dict = json.loads(ret_val)
     out_dict = classes_dict[school]
     return json.dumps(out_dict)
-
-@app.route('/add_data', methods=['POST'])
-def addData():
-    data = request.json["value"]
-    ourstr = "mg_db."+request.json["collection"]
-    table = eval(ourstr)
-    table.insert_one(data)
-    return "Data Inserted"
-
 
 if __name__ == '__main__':
     app.run()
