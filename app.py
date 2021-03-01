@@ -633,13 +633,5 @@ def berk_classes():
     out_dict = classes_dict[school]
     return json.dumps(out_dict)
 
-@app.route('/add_data', methods=['POST'])
-def addData():
-    table = mg_db.Users
-    data = request.json
-    table.insert_one(data)
-    return "Data Added"
-
-
 if __name__ == '__main__':
     app.run()
