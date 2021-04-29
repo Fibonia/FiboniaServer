@@ -643,19 +643,19 @@ def addData():
 
 @app.route('/delete_data', methods=['POST'])
 def deleteData():
-    ourid = request.json["id"]
+    ourid = request.json["email"]
     ourstr = "mg_db."+request.json["collection"]
     table = eval(ourstr)
-    myquery = {"_id":ObjectId(ourid)}
+    myquery = {"email":ourid}
     table.delete_one(myquery)
     return "Data Deleted"
 
 @app.route('/select_data', methods=['POST'])
 def selectData():
-    ourid = request.json["id"]
+    ourid = request.json["email"]
     ourstr = "mg_db."+request.json["collection"]
     table = eval(ourstr)
-    myquery = {"_id":ObjectId(ourid)}
+    myquery = {"email":ourid}
     mydoc = table.find(myquery)
     list_cur = list(mydoc)
     mydoc = dumps(list_cur)
@@ -663,14 +663,50 @@ def selectData():
 
 @app.route('/update_data', methods=['POST'])
 def updateData():
-    ourid = request.json["id"]
+    ourid = request.json["email"]
     value = request.json["value"]
     ourstr = "mg_db."+request.json["collection"]
     table = eval(ourstr)
-    myquery = {"_id":ObjectId(ourid)}
+    myquery = {"email":ourid}
     newvalues = { "$set": value }
     table.update_one(myquery,newvalues)
     return "Data Updated"
+
+
+
+from newsapi import NewsApiClient #Make sure to pip install newsapi-python
+from datetime import date, timedelta
+
+class ContentGenerator:
+
+    def __init__(self):
+        self.newsapi = NewsApiClient(api_key='04fb781345e84aa788b7eca1179673d5')
+        self.trusted_sources = "bbc-news,the-verge"
+        self.trusted_domains = 'bbc.co.uk,techcrunch.com,apnews.com,politico.com'
+
+        return
+
+    def generate(self, keyword=None,date1=None,date2=None,pagenum=None):
+        """
+        Params: keyword (string): single word such as bitcoin, mars, etc.
+        Returns: sources (list<string>): up to 20 links for relevant articles
+        """
+        today_date = date1
+        last_week_date = date2
+        sources = self.newsapi.get_everything(q=keyword,
+                                      from_param=last_week_date,
+                                      to=today_date,
+                                      language='en',
+                                      sort_by='publishedAt',
+                                      page=pagenum)
+        return [source["url"] for source in sources["articles"]]
+
+@app.route('/get_news', methods=['POST'])
+def getNews():
+  cg = ContentGenerator()
+  date1 = str(date.today())
+  date2 = eval("str(date.today()-timedelta(weeks=1))")
+  return cg.generate(request.json["word"],date1,date2,1) #Returns a list of up to 20 links as strings
 
 if __name__ == '__main__':
     app.run()
