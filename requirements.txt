@@ -58,3 +58,4 @@ urllib3==1.25.10
 Wand==0.6.5
 Werkzeug==1.0.1
 zipp==3.4.0
+newsapi-python==0.2.6
