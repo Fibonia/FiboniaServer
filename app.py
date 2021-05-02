@@ -658,7 +658,7 @@ def selectData():
     myquery = {"email":ourid}
     mydoc = table.find(myquery)
     list_cur = list(mydoc)
-    mydoc = dumps(list_cur)
+    mydoc = json.dumps(list_cur)
     return mydoc
 
 @app.route('/update_data', methods=['POST'])
