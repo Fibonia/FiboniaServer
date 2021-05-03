@@ -16,8 +16,8 @@ import requests
 from flask_cors import CORS
 import pymongo
 import ssl
-from hashids import Hashids
-import pyotp
+# from hashids import Hashids
+#import pyotp
 
 
 
@@ -107,26 +107,26 @@ def create_payment():
 ##Methods added for Stripe Connect
 
 # instantiation of an unique Hashid object
-hashids = Hashids(min_length=7, alphabet='abcdefghijklmnopqrstuvwxyz0123456789', salt = 'fibonia')
+# hashids = Hashids(min_length=7, alphabet='abcdefghijklmnopqrstuvwxyz0123456789', salt = 'fibonia')
 
-# Since it takes a String data type rather than the ObjectID(Int) data type, 
-# you need to first convert the ObjectID(Int) to String and save it as a 
-# variable to pass into this method. 
-# i.e. user_id = str(ObjectID.str)
-@app.route('/retrieve-referral-code/<uniqueid>', methods=['GET'])
-def retrieve_referral(uniqueid):
-    #encode
-    hashid = hashids.encrypt(str(uniqueid))
-    return hashid
+# # Since it takes a String data type rather than the ObjectID(Int) data type, 
+# # you need to first convert the ObjectID(Int) to String and save it as a 
+# # variable to pass into this method. 
+# # i.e. user_id = str(ObjectID.str)
+# @app.route('/retrieve-referral-code/<uniqueid>', methods=['GET'])
+# def retrieve_referral(uniqueid):
+#     #encode
+#     hashid = hashids.encrypt(str(uniqueid))
+#     return hashid
 
-@app.route('/decrypt-referral-code/<hashid>', methods=['GET'])
-def decrypt_referral(hashid):
-    decrypted = hashids.decrypt(str(hashid))
-    return str(decrypted[0])
+# @app.route('/decrypt-referral-code/<hashid>', methods=['GET'])
+# def decrypt_referral(hashid):
+#     decrypted = hashids.decrypt(str(hashid))
+#     return str(decrypted[0])
 
 # pyotp instance instantiation
-secret = pyotp.random_base32()
-totp = pyotp.TOTP(secret, interval=600)
+# secret = pyotp.random_base32()
+# totp = pyotp.TOTP(secret, interval=600)
 
 @app.route('/retrieve-otp/', methods=['GET'])
 def otp():
@@ -656,7 +656,7 @@ def selectData():
     ourstr = "mg_db."+request.json["collection"]
     table = eval(ourstr)
     myquery = {"email":ourid}
-    mydoc = table.find(myquery)
+    mydoc = table.find(myquery,{'_id': False})
     list_cur = list(mydoc)
     mydoc = json.dumps(list_cur)
     return mydoc
@@ -699,14 +699,18 @@ class ContentGenerator:
                                       language='en',
                                       sort_by='publishedAt',
                                       page=pagenum)
-        return [source["url"] for source in sources["articles"]]
+        return [[source["url"] for source in sources["articles"]],[source["urlToImage"] for source in sources["articles"]],[source["title"] for source in sources["articles"]],[source["source"]["name"] for source in sources["articles"]]]
+
+def Convert(lst):
+    res_dct = {i: lst[i] for i in range(0, len(lst))}
+    return res_dct
 
 @app.route('/get_news', methods=['POST'])
 def getNews():
   cg = ContentGenerator()
   date1 = str(date.today())
   date2 = eval("str(date.today()-timedelta(weeks=1))")
-  return cg.generate(request.json["word"],date1,date2,1) #Returns a list of up to 20 links as strings
+  return Convert(cg.generate(request.json["word"],date1,date2,1)) #Returns a list of up to 20 links as strings
 
 if __name__ == '__main__':
     app.run()
